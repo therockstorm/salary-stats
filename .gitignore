@@ -3,3 +3,4 @@
 /.next
 /coverage
 /node_modules
+/src/prisma/data

@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes: ["./src/prisma/data/db:/var/lib/postgresql/data"]
+  app:
+    build: .
+    depends_on: [db]
+    platform: linux/amd64
+    ports: ["3000:3000"]
+    volumes: [".:/app", "/app/node_modules"]

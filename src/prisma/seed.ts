@@ -1,62 +1,83 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
+const agentData = [
   {
-    name: "Alice",
-    email: "alice@prisma.io",
-    posts: {
-      create: [
-        {
-          title: "Join the Prisma Slack",
-          content: "https://slack.prisma.io",
-          published: true,
-        },
-      ],
-    },
+    name: "Abhishek",
+    salary: "145000",
+    currency: "USD",
+    department: "Engineering",
+    subDepartment: "Platform",
   },
   {
-    name: "Nilu",
-    email: "nilu@prisma.io",
-    posts: {
-      create: [
-        {
-          title: "Follow Prisma on Twitter",
-          content: "https://www.twitter.com/prisma",
-          published: true,
-        },
-      ],
-    },
+    name: "Anurag",
+    salary: "90000",
+    currency: "USD",
+    department: "Banking",
+    onContract: true,
+    subDepartment: "Loan",
   },
   {
-    name: "Mahmoud",
-    email: "mahmoud@prisma.io",
-    posts: {
-      create: [
-        {
-          title: "Ask a question about Prisma on GitHub",
-          content: "https://www.github.com/prisma/prisma/discussions",
-          published: true,
-        },
-        {
-          title: "Prisma on YouTube",
-          content: "https://pris.ly/youtube",
-        },
-      ],
-    },
+    name: "Himani",
+    salary: "240000",
+    currency: "USD",
+    department: "Engineering",
+    subDepartment: "Platform",
+  },
+  {
+    name: "Yatendra",
+    salary: "30",
+    currency: "USD",
+    department: "Operations",
+    subDepartment: "CustomerOnboarding",
+  },
+  {
+    name: "Ragini",
+    salary: "30",
+    currency: "USD",
+    department: "Engineering",
+    subDepartment: "Platform",
+  },
+  {
+    name: "Nikhil",
+    salary: "110000",
+    currency: "USD",
+    onContract: true,
+    department: "Engineering",
+    subDepartment: "Platform",
+  },
+  {
+    name: "Guljit",
+    salary: "30",
+    currency: "USD",
+    department: "Administration",
+    subDepartment: "Agriculture",
+  },
+  {
+    name: "Himanshu",
+    salary: "70000",
+    currency: "EUR",
+    department: "Operations",
+    subDepartment: "CustomerOnboarding",
+  },
+  {
+    name: "Anupam",
+    salary: "200000000",
+    currency: "INR",
+    department: "Engineering",
+    subDepartment: "Platform",
   },
 ];
 
 async function main() {
-  console.log(`Start seeding ...`);
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
-    });
-    console.log(`Created user with id: ${user.id}`);
-  }
-  console.log(`Seeding finished.`);
+  console.log("Seeding database...");
+
+  await prisma.application.create({
+    data: { key: "clipboard", secret: "secret" },
+  });
+
+  await Promise.all(agentData.map((data) => prisma.agent.create({ data })));
 }
 
 main()
