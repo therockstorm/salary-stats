@@ -1,7 +1,10 @@
 import prisma from "@/lib/storage/prisma";
+import { createToken } from "@/lib/tokens";
 
 export const APPLICATION_KEY = "clipboard";
 export const APPLICATION_SECRET = "secret";
+
+export const AUTHORIZATION_HEADER = `Bearer ${createToken(APPLICATION_KEY)}`;
 
 export const TOKEN_DATA = {
   exp: expect.any(Number),

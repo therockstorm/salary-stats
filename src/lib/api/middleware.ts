@@ -2,6 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { ApiError } from "next/dist/server/api-utils";
 import { ZodError } from "zod";
 
+import { verifyToken } from "../tokens";
 import { apiError, ApiErrorReq, StatusCode } from "./errors";
 
 export const METHODS = { delete: "DELETE", get: "GET", post: "POST" } as const;
@@ -19,6 +20,14 @@ export function withErrorHandling(handler: NextApiHandler, methods: Method[]) {
       console.error(error);
       return apiError({ ...toApiErrorReq(error), res });
     }
+  };
+}
+
+export function withToken(handler: NextApiHandler) {
+  return async function (req: NextApiRequest, res: NextApiResponse) {
+    await verifyToken(req.headers.authorization);
+
+    return await handler(req, res);
   };
 }
 

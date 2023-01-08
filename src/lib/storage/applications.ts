@@ -23,6 +23,11 @@ export async function createApplication(data: Prisma.ApplicationCreateInput) {
   return filterSecret(application);
 }
 
+export async function getApplicationById(id: number) {
+  const application = await getApplicationByIdWithSecret(id);
+  return filterSecret(application);
+}
+
 export async function getApplicationByIdWithSecret(id: number) {
   const application = await prisma.application.findFirst({ where: { id } });
   return application;
