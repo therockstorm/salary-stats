@@ -66,6 +66,7 @@ function nestStatsBasedOnAggregates(
       avg: format(runningStats[group].total / runningStats[group].count),
       count: runningStats[group].count,
     };
+    console.log("ROCKY: groups", runningStats[group].total);
 
     if (groups.length === 1) {
       stats[group] = calc;

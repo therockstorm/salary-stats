@@ -34,7 +34,9 @@ export async function getApplicationByIdWithSecret(id: number) {
 }
 
 export async function getApplications() {
-  const applications = await prisma.application.findMany();
+  const applications = await prisma.application.findMany({
+    orderBy: { id: "asc" },
+  });
   return applications.map(filterSecret);
 }
 

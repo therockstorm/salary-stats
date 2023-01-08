@@ -1,6 +1,7 @@
 .DS_Store
 
 /.next
+/.swc
 /coverage
 /node_modules
 /src/prisma/data

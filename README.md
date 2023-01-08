@@ -9,15 +9,14 @@ npm install
 # Start the database and API
 docker-compose up
 
-# Migrate the database
-npx prisma migrate dev
-
-# Seed the database
-npx prisma db seed
+# Once the database in the above step logs "database system is ready to accept connections", migrate the database and seed it with data
+npx prisma migrate dev && npx prisma db seed
 
 # Run the unit and integration tests
 npm run test
 ```
+
+The Postgres database and API server are running and all tests are passing! Continue to the next section for instructions on trying out the API with Postman.
 
 ## Using the REST API
 
@@ -65,7 +64,7 @@ For your convenience, I've included a Postman collection and Postman environment
     - `currency: String` (required): The agent's [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
     - `department: String` (required): The agent's department.
     - `subDepartment: String` (required): The agent's subDepartment.
-    - `onContract: Boolean` (default: false): Whether the agent is on contract or not.
+    - `onContract: Boolean` (default: `false`): Whether the agent is on contract or not.
 
 ### `/api/applications/:id`
 
@@ -88,11 +87,11 @@ For your convenience, I've included a Postman collection and Postman environment
         - `/api/stats?aggregate=currency`
         - `/api/stats?aggregate=department.subDepartment`
         - `/api/stats?aggregate=department.currency`
-    - `calculationField: String` (optional): The numeric field to calculate stats over. Defaults to `salary` since it's the only numeric field.
+    - `calculationField: String` (default: `salary`): The numeric field to calculate stats over. Defaults to `salary` since it's the only numeric field.
       - Allowed values: `salary`
       - Examples
         - `/api/stats?calculationField=salary`
-    - `currency`: String (optional): The currency to convert each `calculationField` to prior to calculating stats.
+    - `currency`: String (optional): The currency to convert each `calculationField` to prior to calculating stats. Defaults to treating `calculationField` as just a `number` and not doing conversions.
       - Allowed values: `EUR`, `INR`, `USD`
       - Examples
         - `/api/stats?currency=INR`
@@ -130,6 +129,8 @@ Security is important, even for internal APIs. In a real-world scenario, each mi
 I chose JWTs for access tokens with a 30 minute expiration. There are tradeoffs to any approach. You cannot immediately revoke JWTs, for instance, they're valid until the expiration. But this seemed like a reasonable approach for this situation.
 
 Secrets are only transmitted in request bodies, not URLs. This ensures that, assuming this is deployed using HTTPS, secrets are encrypted in-transit. Plaintext secrets aren't retained, only the hashes, and the hashes aren't returned in `GET` call responses.
+
+If this were a public API, I wouldn't want to return the IDs used in the database. This could inform attackers of the size of our data and allow them to guess IDs. This could be mitigated by using, for example, UUIDs for the IDs returned in the API. The integer IDs may still make sense to retain for ordering and performance reasons at the database level.
 
 ### Architecture and project structure
 

@@ -1,4 +1,5 @@
 /.next
+/.swc
 /coverage
 /node_modules
 /src/prisma/data

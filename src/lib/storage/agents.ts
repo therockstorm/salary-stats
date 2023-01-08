@@ -22,7 +22,10 @@ export function getAgentById(id: number) {
 }
 
 export function getAgents({ filters }: Readonly<{ filters?: Filters }> = {}) {
-  return prisma.agent.findMany({ where: buildWhere(filters) });
+  return prisma.agent.findMany({
+    where: buildWhere(filters),
+    orderBy: { id: "asc" },
+  });
 }
 
 export function deleteAgent(id: number) {
