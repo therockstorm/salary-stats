@@ -4,3 +4,4 @@
 /coverage
 /node_modules
 /src/prisma/data
+/src/prisma/generated

@@ -1,9 +1,11 @@
 import { Prisma } from "@prisma/client";
 
+import { ApplicationCreateInputObjectSchema } from "@/prisma/generated/schemas";
+
 import prisma from "./prisma";
 
 export function validateApplication(data: unknown) {
-  return data as Prisma.ApplicationCreateInput;
+  return ApplicationCreateInputObjectSchema.parse(data);
 }
 
 export async function createApplication(data: Prisma.ApplicationCreateInput) {
