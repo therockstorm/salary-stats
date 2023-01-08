@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
+import { hash } from "@/lib/crypto";
+
 const prisma = new PrismaClient();
 
 const agentData = [
@@ -73,9 +75,8 @@ const agentData = [
 async function main() {
   console.log("Seeding database...");
 
-  await prisma.application.create({
-    data: { key: "clipboard", secret: "secret" },
-  });
+  const secret = await hash("secret");
+  await prisma.application.create({ data: { key: "clipboard", secret } });
 
   await Promise.all(agentData.map((data) => prisma.agent.create({ data })));
 }
