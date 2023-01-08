@@ -12,6 +12,15 @@ export const TOKEN_DATA = {
   key: APPLICATION_KEY,
 };
 
+export const AGENT = {
+  name: "Abhishek",
+  salary: "145000",
+  currency: "USD",
+  department: "Engineering",
+  onContract: false,
+  subDepartment: "Frontend",
+};
+
 export const ERRORS = {
   badRequest: (detail: string) => ({
     errors: [{ detail }],
