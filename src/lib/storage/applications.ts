@@ -28,6 +28,11 @@ export async function getApplicationByIdWithSecret(id: number) {
   return application;
 }
 
+export async function getApplications() {
+  const applications = await prisma.application.findMany();
+  return applications.map(filterSecret);
+}
+
 function filterSecret(application: Application | null) {
   if (application == null) return application;
 

@@ -16,6 +16,11 @@ export const ERRORS = {
     status: 400,
   }),
   notFound: { code: "NotFound", status: 404 },
+  unauthorizedMissingHeader: {
+    code: "Unauthorized",
+    errors: [{ detail: "Required header: 'authorization'" }],
+    status: 401,
+  },
   unsupportedMediaType: { code: "UnsupportedMediaType", status: 415 },
 };
 
