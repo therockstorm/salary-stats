@@ -21,6 +21,15 @@ export const AGENT = {
   subDepartment: "Frontend",
 };
 
+export const AGENT_2 = {
+  name: "Anurag",
+  salary: "90000",
+  currency: "USD",
+  department: "Banking",
+  onContract: true,
+  subDepartment: "Loan",
+};
+
 export const ERRORS = {
   badRequest: (detail: string) => ({
     errors: [{ detail }],

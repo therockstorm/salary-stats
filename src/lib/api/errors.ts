@@ -32,6 +32,22 @@ export type ApiErrorReq = Readonly<{
   status: StatusCode;
 }>;
 
+export function badRequest({
+  actual,
+  expected,
+  name,
+}: Readonly<{
+  actual: string;
+  expected: readonly string[];
+  name: string;
+}>) {
+  throw ERRORS.badRequest(
+    `Invalid: '${name}'; expected one of '${expected.join(
+      ","
+    )}', received '${actual}'`
+  );
+}
+
 export function apiError({ errors, res, status }: ApiErrorReq) {
   res.status(status).json({ code: StatusCode[status], status, errors });
 }

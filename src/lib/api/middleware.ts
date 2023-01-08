@@ -27,7 +27,7 @@ export function withToken(handler: NextApiHandler) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
     await verifyToken(req.headers.authorization);
 
-    return await handler(req, res);
+    return handler(req, res);
   };
 }
 

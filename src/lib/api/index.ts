@@ -1,7 +1,5 @@
 import { ERRORS } from "./errors";
 
-export const METHODS = { delete: "DELETE", get: "GET", post: "POST" } as const;
-
 export function parseBody(body: string) {
   if (body == null) return {};
   if (typeof body === "string") return JSON.parse(body);
@@ -14,4 +12,8 @@ export function toPathId(val?: string) {
   if (isNaN(idAsNum)) throw ERRORS.notFound;
 
   return idAsNum;
+}
+
+export function toBool(val?: string) {
+  return val?.toLowerCase() === "true";
 }

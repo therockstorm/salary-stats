@@ -17,7 +17,6 @@ module.exports = {
   rules: {
     "no-await-in-loop": "warn",
     "no-return-await": "warn",
-    "require-await": "warn",
     "simple-import-sort/imports": "warn",
   },
   settings: { react: { version: "detect" } },

@@ -1,4 +1,4 @@
-import { parseBody } from "@/lib/api";
+import { parseBody, toBool, toPathId } from "@/lib/api";
 
 describe(parseBody, () => {
   it("returns parsed value", () => {
@@ -13,5 +13,29 @@ describe(parseBody, () => {
 
   it("returns empty object if undefined", () => {
     expect(parseBody(undefined as unknown as string)).toEqual({});
+  });
+});
+
+describe(toPathId, () => {
+  it("returns parsed value", () => {
+    const exp = 1;
+    expect(toPathId(exp.toString())).toEqual(exp);
+  });
+
+  it("returns undefined if invalid", () => {
+    const exp = "invalid";
+    expect(() => toPathId(exp)).toThrow("");
+  });
+});
+
+describe(toBool, () => {
+  it("returns parsed value", () => {
+    const exp = true;
+    expect(toBool(exp.toString())).toBe(exp);
+  });
+
+  it("returns false if not true", () => {
+    const exp = "invalid";
+    expect(toBool(exp)).toBe(false);
   });
 });
