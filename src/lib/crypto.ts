@@ -8,3 +8,7 @@ const OPTIONS: argon2.Options & { raw?: false } = { parallelism: 1 };
 export function hash(secret: string) {
   return argon2.hash(secret, OPTIONS);
 }
+
+export function verify(hash: string, secret: string) {
+  return argon2.verify(hash, secret, OPTIONS);
+}

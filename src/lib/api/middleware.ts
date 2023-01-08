@@ -1,4 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { ApiError } from "next/dist/server/api-utils";
 import { ZodError } from "zod";
 
 import { apiError, ApiErrorReq, StatusCode } from "./errors";
@@ -22,6 +23,13 @@ export function withErrorHandling(handler: NextApiHandler, methods: Method[]) {
 }
 
 function toApiErrorReq(error: unknown): Omit<ApiErrorReq, "res"> {
+  if (error instanceof ApiError) {
+    return {
+      errors: error.message ? [{ detail: error.message }] : undefined,
+      status: error.statusCode,
+    };
+  }
+
   if (error instanceof ZodError) {
     return {
       errors: error.issues.map((issue) => {

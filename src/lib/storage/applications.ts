@@ -1,12 +1,19 @@
 import { Application, Prisma } from "@prisma/client";
+import { z } from "zod";
 
 import { ApplicationCreateInputObjectSchema } from "@/prisma/generated/schemas";
 
 import { hash } from "../crypto";
 import prisma from "./prisma";
 
+const TokenCreateInputObjectSchema = z.object({ secret: z.string() });
+
 export function validateApplication(data: unknown) {
   return ApplicationCreateInputObjectSchema.parse(data);
+}
+
+export function validateToken(data: unknown) {
+  return TokenCreateInputObjectSchema.parse(data);
 }
 
 export async function createApplication(data: Prisma.ApplicationCreateInput) {
@@ -14,6 +21,11 @@ export async function createApplication(data: Prisma.ApplicationCreateInput) {
     data: { ...data, secret: await hash(data.secret) },
   });
   return filterSecret(application);
+}
+
+export async function getApplicationByIdWithSecret(id: number) {
+  const application = await prisma.application.findFirst({ where: { id } });
+  return application;
 }
 
 function filterSecret(application: Application | null) {

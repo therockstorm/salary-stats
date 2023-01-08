@@ -15,4 +15,5 @@ module.exports = createJestConfig({
   },
   moduleNameMapper: { "^@/(.*)$": "<rootDir>/src/$1" },
   testEnvironment: "jest-environment-jsdom",
+  testPathIgnorePatterns: ["<rootDir>/src/__tests__/constants.ts"],
 });
